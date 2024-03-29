@@ -49,7 +49,7 @@ export default async function Page({ params }: SearchParam) {
   const data = await getData({ url, id: params.id }); // Fix: Pass url and id as separate arguments
   return (
     <div>
-      <ProductDetailComponent
+      <ProductDetailComponent 
         image={data.image}
         title={data.description}
         price={data.title}

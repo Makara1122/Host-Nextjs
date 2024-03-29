@@ -17,15 +17,15 @@ export default function NavBarComponet() {
       </Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse>
-        <Navbar.Link as={Link} href="/" active>
+        <Navbar.Link as={Link} href="/" className={`${path == "/" && "text-green-500"}`}>
           Home
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/about" className={`${path == "/about"? "bg-red-600" : ""}`}>
+        <Navbar.Link as={Link} href="/about" className={`${path == "/about" && "text-green-500" }`}>
           About
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/service" className={`${path == "/service"? "bg-red-600" : ""}`}>Services</Navbar.Link>
-        <Navbar.Link href="#">Pricing</Navbar.Link>
-        <Navbar.Link href="#">Contact</Navbar.Link>
+        <Navbar.Link as={Link} href="/service" className={`${path == "/service" && "text-green-500" }`}>Services</Navbar.Link>
+        
+        <Navbar.Link as={Link} href="/contact" className={`${path == '/contact'} && "text-green-500"`}>Contact</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   );

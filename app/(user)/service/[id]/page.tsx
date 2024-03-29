@@ -1,30 +1,61 @@
-import ProductDetailComponent from '@/components/ProductDetailComponent'
-import React from 'react'
+import ProductDetailComponent from "@/components/ProductDetailComponent";
+import { Metadata, ResolvingMetadata } from "next";
+import React from "react";
 
 type SearchParam = {
-    params : {
-        id : number
-    }
-}
+  params: {
+    id: string;
+  };
+  searchParams:{
+    [key:string]:string | string[] |undefined
+  }
+};
 
 type UrlId = {
-    url : string,
-    id : number,
-}
+  url: string;
+  id: string;
+};
 
-const getData = async ({url,id} : UrlId) => {
-    const res =  await fetch(`${url}/${id}`)
-    const data = await res.json()
-    return data
-}
+const getData = async ({ url, id }: UrlId) => {
+  const res = await fetch(`${url}/${id}`);
+  const data = await res.json();
+  return data;
+};
+
+export async function generateMetadata(
+    { params, searchParams }: SearchParam,
+    parent: ResolvingMetadata
+  ): Promise<Metadata> {
+    // read route params
+    const id = params.id
+   
+    // fetch data
+    const product = await fetch(`https://fakestoreapi.com/products${id}`).then((res) => res.json())
+   
+    // optionally access and extend (rather than replace) parent metadata
+    const previousImages = (await parent).openGraph?.images || []
+   
+    return {
+      title: product.title,
+      description:product.description,
+      openGraph: {
+        images: [product.image, ...previousImages],
+      },
+    }
+  }
 
 export default async function Page({ params }: SearchParam) {
-    const url = "https://fakestoreapi.com/products";
-   const data = await getData({url, id: params.id}) // Fix: Pass url and id as separate arguments
-    return <div>
-
-        <ProductDetailComponent   image={data.image} title={data.description} price={data.title}  />
+  const url = "https://fakestoreapi.com/products";
+  const data = await getData({ url, id: params.id }); // Fix: Pass url and id as separate arguments
+  return (
+    <div>
+      <ProductDetailComponent
+        image={data.image}
+        title={data.description}
+        price={data.title}
+      />
     </div>
+  );
+
+  
 }
-
-

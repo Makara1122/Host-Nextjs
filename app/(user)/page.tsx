@@ -13,6 +13,7 @@ export const metadata : Metadata = {
 export default function Home() {
   return (
     <main >
+      <a href="https://host-nextjs.vercel.app/"><h1 className="text-center text-2xl text-blue-600">https://host-nextjs.vercel.app/</h1></a>
       <CarouselComponent/>
     </main>
   );
